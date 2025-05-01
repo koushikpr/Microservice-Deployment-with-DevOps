@@ -30,7 +30,7 @@ services:
     image: grafana/loki:latest
     volumes:
       - loki-data:/loki
-    command: /bin/sh -c "mkdir -p /loki/index /loki/cache /loki/chunks && /bin/loki -config.file=/etc/loki/config.yaml"
+    command: /bin/sh -c "mkdir -p /loki/index /loki/cache /loki/chunks && /bin/loki 
     ports:
       - "3100:3100"
     networks:
