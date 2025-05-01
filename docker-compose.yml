@@ -22,29 +22,6 @@ services:
     networks:
       - devops-net
 
-  jenkins:
-    image: jenkins/jenkins:lts
-    user: root
-    ports:
-      - "8080:8080"
-    volumes:
-      - jenkins_data:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock  # Enables Jenkins to run Docker inside container
-    networks:
-      - devops-net
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafana_data:/var/lib/grafana
-    networks:
-      - devops-net
-
-volumes:
-  jenkins_data:
-  grafana_data:
-
+  
 networks:
   devops-net:
