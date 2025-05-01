@@ -13,39 +13,43 @@ services:
       - mongo
     networks:
       - devops-net
+    labels:
+      - "logging=promtail"
 
   mongo:
     image: mongo:latest
     restart: always
     ports:
       - "27017:27017"
-    volumes:
-      - mongo_data:/data/db  
     networks:
       - devops-net
+    labels:
+      - "logging=promtail"
+
   loki:
-    image: grafana/loki:2.9.0
-    ports:
-      - "3100:3100"
-    command: -config.file=/etc/loki/local-config.yaml
+    image: grafana/loki:2.9.2
     volumes:
       - ./loki-config.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
     networks:
       - devops-net
+
   promtail:
-    image: grafana/promtail:2.9.0
+    image: grafana/promtail:2.9.2
     volumes:
       - /var/log:/var/log
-      - /etc/machine-id:/etc/machine-id
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /etc/machine-id:/etc/machine-id:ro
+      - /etc/hostname:/etc/hostname:ro
       - ./promtail-config.yaml:/etc/promtail/config.yaml
     command: -config.file=/etc/promtail/config.yaml
     networks:
       - devops-net
 
-
-volumes:
-  mongo_data:      
-
 networks:
   devops-net:
+
+volumes:
+  mongo_data:
