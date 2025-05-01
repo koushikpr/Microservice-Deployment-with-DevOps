@@ -29,7 +29,6 @@ services:
   loki:
     image: grafana/loki:2.9.2
     volumes:
-      - ./loki-config.yaml:/etc/loki/config.yaml
       - loki-data:/loki
     command: /bin/sh -c "mkdir -p /loki/index /loki/cache /loki/chunks && /bin/loki -config.file=/etc/loki/config.yaml"
     ports:
