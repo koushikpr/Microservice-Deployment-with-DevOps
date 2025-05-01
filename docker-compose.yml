@@ -31,7 +31,7 @@ services:
     volumes:
       - ./loki-config.yaml:/etc/loki/local-config.yaml
       - loki-data:/loki
-    command: -config.file=/etc/loki/local-config.yaml
+    command: /bin/sh -c "mkdir -p /loki/index /loki/cache /loki/chunks && /bin/loki -config.file=/etc/loki/local-config.yaml"
     ports:
       - "3100:3100"
     networks:
